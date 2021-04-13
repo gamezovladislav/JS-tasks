@@ -24,11 +24,26 @@ var vladimir = new Person('Vladimir');
  * Шпионаж не должен отменять работу целевой функции.
  * Она должна по-прежнему также работать.
  *
- * @params {function} целевая функция шпионажа
+ * @param {function} targetFn целевая функция шпионажа
  * @returns {function} функция, подставляемая вместо целевой
  */
 function spy(targetFn) {
-    // You code goes here...
+
+    const proxyFn = function (...args) {
+        const returnedValue = targetFn(...args);
+        this.hasBeenCalled = true;
+        this.calls++;
+        this.lastCallArguments = [...args];
+        this.lastReturn = returnedValue;
+        return returnedValue;
+    };
+
+    proxyFn.hasBeenCalled = false;
+    proxyFn.calls = 0;
+    proxyFn.lastCallArguments = undefined;
+    proxyFn.lastReturn = undefined;
+
+    return proxyFn;
 }
 
 // Создаем шпиона на функцию "vladimir.introduceTo"
