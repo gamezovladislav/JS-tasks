@@ -29,12 +29,16 @@ var vladimir = new Person('Vladimir');
  */
 function spy(targetFn) {
 
+    function postCallFn(retValue, argsArr) {
+        proxyFn.hasBeenCalled = true;
+        proxyFn.calls++;
+        proxyFn.lastCallArguments = argsArr;
+        proxyFn.lastReturn = retValue;
+    }
+
     const proxyFn = function (...args) {
         const returnedValue = targetFn(...args);
-        this.hasBeenCalled = true;
-        this.calls++;
-        this.lastCallArguments = [...args];
-        this.lastReturn = returnedValue;
+        postCallFn(returnedValue, [...args]);
         return returnedValue;
     };
 
