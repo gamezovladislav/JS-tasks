@@ -66,58 +66,69 @@ const students = [
 /**
  * [Number] количество совершеннолетних (возвраст >= 18)
  */
-var adultsCount;
-
+var adultsCount = students.filter(value => value.age >= 18).length;
 
 /**
  * [Number] Средний бал среди всех учащихся
  */
-var meanGrade;
-
+var meanGrade = students.reduce((prev, { grade }) => prev + grade, 0) / students.length;
 
 /**
  * [Number] Средний бал среди несовершеннолетних (возраст < 18)
  */
-var teenMeanGrade;
-
+var teenMeanGrade = students
+    .filter(st => st.age < 18)
+    .reduce((prev, { grade }, _, array) => prev + grade / array.length, 0);
 
 /**
  * [Number] Средний бал среди совершеннолетних парней
  */
-var menMeanGrade;
+var menMeanGrade = students
+    .filter(student => student.age >= 18 && student.gender === 'M')
+    .reduce((prev, { grade }, _, array) => prev + grade / array.length, 0);
 
 
 /**
  * [Array<Srudent>] Массив учащихся, отсортированных по возрастанию балов.
  */
-var studentsByGrades;
+var studentsByGrades = students.sort((x, y) => x.grade - y.grade);
 
 
 /**
  * [Array<String>] Массив имен всех учащихся
  */
-var studentNames;
+var studentNames = students.map(student => student.name);
 
 
 /**
  * [Array<String>] Массив имен всех девушек
  */
-var girlNames;
+var girlNames = students.filter(student => student.gender === 'F')
+    .map(girl => girl.name);
 
 
 /**
  * [Array<String>] Имена всех штатов, в которых живут учащиеся (без повторений!)
  */
-var states;
+var states = students
+    .reduce((unique, { state }) => {
+        if (!unique.includes(state)) {
+            unique.push(state);
+        }
+        return unique;
+    }, []);
 
 
 /**
  * [Array<String>] Имена всех совершеннолетних из штата California
  */
-var californians;
-
+var californians = students
+    .filter(student => student.state === 'California' && student.age >= 18)
+    .map(student => student.name);
 
 /**
  * [Number] Средний бал учащихся из Аляски, с именем начинающимся на "S"
  */
-var alaskaSMeanGrade;
+var alaskaSMeanGrade = students
+    .filter(student => student.state === 'Alaska' && student.name[0] === 'S')
+    .reduce((collected, { grade }, _, { length }) => collected + grade / length, 0);
