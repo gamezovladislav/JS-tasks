@@ -20,7 +20,15 @@ const array = [2, 21, 10, 12, 4, 17, 3, 20, 15, 1, 7];
 
 /* Здесь код первой реализации */
 
+// Разделим массив на 2 подмассива, отсортируем каждые и просто "склеим"
+const separation = array.reduce((separation, value) => {
+    separation[value % 2].push(value);
+    return separation;
+}, [[], []]);
+separation[0].sort(( x, y) => x - y);
+separation[1].sort(( x, y) => x - y);
 
+const sortedArray = [...separation[1], ...separation[0]];
 
 // ////////////////////////////////////////////////////////
 // 2. Сортировка через метод .sort()
