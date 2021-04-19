@@ -37,7 +37,8 @@ const sortedArray = [...separation[1], ...separation[0]];
 
 // Пример использования
 array.sort(compareFunction); // После этого массив уже отсортирован
-
+console.log(array.sort(compareFunction));
+console.log(array.sort(compareFunctionOnlyTern));
 /*
  * Решение задания сводится к реализации функции compareFunction
  */
@@ -52,4 +53,14 @@ function compareFunction(a, b) {
         return 1;
     }
     return a - b;
+}
+
+function compareFunctionOnlyTern(a, b) {
+    return a % 2
+        ? b % 2
+            ? a - b
+            : -1
+        : b % 2
+            ? 1
+            : a - b;
 }
