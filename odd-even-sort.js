@@ -42,5 +42,14 @@ array.sort(compareFunction); // После этого массив уже отс
  * Решение задания сводится к реализации функции compareFunction
  */
 function compareFunction(a, b) {
-
+    if (a % 2) {
+        if (b % 2) {
+            return a - b;
+        }
+        return -1;
+    }
+    if (b % 2) {
+        return 1;
+    }
+    return a - b;
 }
